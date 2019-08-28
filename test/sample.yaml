@@ -1,0 +1,75 @@
+swagger: 2.0
+info:
+  title: Sample API
+  version: 1.0.0
+host: api.com
+basePath: /base-path
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /resource-1:
+    get:
+      parameters:
+        - $ref: '#/parameters/_parameterRef'
+        - name: filter
+          in: query
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/_responseSchemaRef'
+        400:
+          description: Client Error
+          schema:
+            type: object
+        500:
+          $ref: '#/responses/_responseRefWithSchemaRef'
+        default:
+          $ref: '#/responses/_responseRef'
+    post:
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/_bodySchemaRef'
+  /resource-1/{resId}:
+    get:
+  /resource-2:
+    get:
+    post:
+parameters:
+  _parameterRef:
+    name: _parameterRef
+    in: header
+    type: string
+    description: parameter defined using reference
+  unsedParameter:
+    name: unsedParameter
+    in: header
+    type: string
+    description: not to be copied
+responses:
+  _responseRef:
+    description: response defined using reference
+    schema:
+      type: object
+  _responseRefWithSchemaRef:
+    description: response defined using reference, with schema ref in it
+    schema:
+      $ref: '#/definitions/_responseSchemaRefInResponseRef'
+  unusedResponse:
+    description: not to be copied
+    schema:
+      type: string
+definitions:
+  _bodySchemaRef:
+    type: object
+  _responseSchemaRef:
+    type: object
+  _responseSchemaRefInResponseRef:
+    type: object

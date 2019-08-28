@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { split } = require('../')
 
 const swaggerFilePath = process.argv[2]

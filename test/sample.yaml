@@ -12,9 +12,12 @@ produces:
   - application/json
 paths:
   /resource-1:
-    get:
+    parameters:
+      - $ref: '#/parameters/_pathLevelParamRef'
+    put:
       parameters:
         - $ref: '#/parameters/_parameterRef'
+        - $ref: '#/parameters/_parameterRefWithSchemaRef'
         - name: filter
           in: query
           type: string
@@ -43,11 +46,21 @@ paths:
     get:
     post:
 parameters:
+  _pathLevelParamRef:
+    name: _pathLevelParamRef
+    in: header
+    type: string
   _parameterRef:
     name: _parameterRef
     in: header
     type: string
     description: parameter defined using reference
+  _parameterRefWithSchemaRef:
+    name: _parameterRefWithSchemaRef
+    in: body
+    schema:
+      $ref: '#/definitions/_bodySchemaRefInParameterRef'
+    description: parameter defined using reference, with schema ref in it
   unsedParameter:
     name: unsedParameter
     in: header
@@ -67,9 +80,25 @@ responses:
     schema:
       type: string
 definitions:
-  _bodySchemaRef:
-    type: object
   _responseSchemaRef:
     type: object
   _responseSchemaRefInResponseRef:
     type: object
+  _bodySchemaRefInParameterRef:
+    type: object
+  _bodySchemaRef:
+    type: object
+    properties:
+      _objectRef:
+        $ref: '#/definitions/_objectRef'
+  _objectRef:
+    type: object
+    properties:
+      _innerObjectRef:
+        $ref: '#/definitions/_innerObjectRef'
+      prop1:
+        type: string
+  _innerObjectRef:
+    type: array
+    items:
+      type: string

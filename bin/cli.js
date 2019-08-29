@@ -2,7 +2,8 @@
 
 const { split } = require('../')
 
-const swaggerFilePath = process.argv[2]
+const inputSwaggerFilePath = process.argv[2]
 const ops = process.argv[3]
+const outputSwaggerFilePath = process.argv[4]
 
-split(swaggerFilePath, ops)
+split(inputSwaggerFilePath, ops, outputSwaggerFilePath)
